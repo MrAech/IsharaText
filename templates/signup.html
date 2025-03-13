@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - IsharaText</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/signup.css')}}">
+</head>
+<body>
+    <butt class="dark-mode-toggle" onclick="applyDarkMode()">Light Mode</butt>
+
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+    </div>
+    <script src="{{url_for('static',filename='js/signup.js')}}"></script>
+</body>
+</html>

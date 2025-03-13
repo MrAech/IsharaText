@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>IsharaText: Empowering Learning</title>
+        <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+    </head>
+    <body>
+        
+        <button class="dark-mode-toggle">Light Mode</button>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>IsharaText</h1>
+                <p>Learn Indian Sign Language in a modern, engaging way.</p>
+                <button class="btn" id="getStartedBtn">Get Started</button>
+            </div>
+        </section>
+
+        <div class="container">
+
+            <section class="section" id="ourFeatures">
+                <h2>Our Features</h2>
+                <div class="features">
+                    <div class="feature-item">
+                        <a href="/dictionary/">
+                            <i class="fas fa-book"></i>
+                            <h3>Dictionary</h3>
+                            <p>Explore our comprehensive ISL dictionary.</p>
+                        </a>
+                    </div>
+                    <div class="feature-item">
+                        <a href="/textToSign/">
+                            <i class="fas fa-pen"></i>
+                            <h3>Text To Sign</h3>
+                            <p>Convert text into ISL instantly.</p>
+                        </a>
+                    </div>
+                    <div class="feature-item">
+                        <a href="/ragLearning/">
+                            <i class="fas fa-hand-paper"></i>
+                            <h3>Ask ISL</h3>
+                            <p>Instant help with your ISL queries.</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section cta">
+                <h2>Begin Your Journey Today!</h2>
+            </section>
+        </div>
+        <script src="{{url_for('static', filename='js/home.js')}}"></script>
+    </body>
+</html>

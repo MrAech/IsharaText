@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rag.css') }}">
+    <title>RAG System</title>
+</head>
+<body>
+    <butt class="dark-mode-toggle" onclick="applyDarkMode()">Light Mode</butt>
+    <button class="back-button"><a href="/">Home</a></button>
+    <div class="chat-container">
+        <div class="chat-header">ASK ABOUT ISL</div>
+
+        <div class="chat-box" id="chatBox">
+            <!-- User and model messages will appear here -->
+        </div>
+        <div class="input-container">
+            <textarea id="userInput" class="chat-input" placeholder="Ask a question..."></textarea>
+            <button id="sendButton" class="send-btn">Send</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/rag.js') }}"></script>
+</body>
+</html>

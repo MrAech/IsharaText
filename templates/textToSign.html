@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to ISL Gloss</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/TTS.css')}}">
+</head>
+<body>
+    <butt class="dark-mode-toggle" onclick="applyDarkMode()">Light Mode</butt>
+    <button class="back-button"><a href="/">Home</a></button>
+
+    <div class="container">
+        <h2>Text to ISL Gloss</h2>
+        <div class="chat-box">
+            <input type="text" id="inputText" placeholder="Enter text here..." required>
+            <button type="submit" onclick="translateText()">Translate</button>
+            <button type="button" onclick="startRecognition('en')">Speak English</button>
+            <button type="button" onclick="startRecognition('hi')">Speak Hindi</button>
+        </div>
+        <div class="loading-bar" id="loadingBar"></div>
+        <div class="output" id="outputText"></div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/TTS.js')}}"></script>
+</body>
+</html>

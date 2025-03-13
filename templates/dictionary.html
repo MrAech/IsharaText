@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/dictionary.css')}}">
+
+</head>
+<body class="dark-mode">
+    <a href="/" class="home-button">Home</a>
+    <butt class="dark-mode-toggle">Light Mode</butt>
+    <div id="container">
+        <div id="leftPanel">
+            <h1>Dictionary</h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for a word...">
+                <button class="clear-search" id="clearSearchButton">❌ Clear</button>
+            </div>
+            <div class="grid-container" id="wordList"></div>
+            <div class="pagination-controls">
+                <button id="prevPage" disabled>Previous</button>
+                <span id="pageInfo">Page 1</span>
+                <button id="nextPage">Next</button>
+            </div>
+        </div>
+        <div class="resizer" id="resizer"></div>
+        <div id="rightPanel">
+            <div id="player"></div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/dictionary.js')}}"></script>
+</body>
+</html>
