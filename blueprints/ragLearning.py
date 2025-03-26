@@ -5,11 +5,9 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import RetrievalQA
 from langchain.llms import OpenAI
-from langchain.document_loaders import DirectoryLoader
 from langchain_community.vectorstores import Chroma
 import requests
 import json
-from langchain.embeddings import HuggingFaceEmbeddings
 from AppSecret import secrets
 
 # Flask Blueprint
@@ -17,46 +15,51 @@ RagLearningBp = Blueprint('ragLearning', __name__)
 
 # Constants
 VECTOR_DB_PATH = "db/ISL-Vector-DB"
-TEXT_EMBEDDING_MODEL = "BAAI/bge-m3"
-PDF_PATH = "Indian-Sign-Language-230.pdf"  # PDF in the same folder
+TEXT_EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+PDF_PATH = "pdf/Indian-Sign-Language-230.pdf"  # Hardcoded PDF
 N_DOC = 2
 
-embedding_function = HuggingFaceEmbeddings(model_name=TEXT_EMBEDDING_MODEL)
-def load_documents():
-    loader = DirectoryLoader('pdf', glob='*.pdf')
+db = None  # Global variable for database
+embeddings = None  # Global variable for embeddings
+
+def get_embeddings():
+    global embeddings
+    if embeddings is None:
+        embeddings = HuggingFaceEmbeddings(model_name=TEXT_EMBEDDING_MODEL)
+    return embeddings
+
+def load_document():
+    global db
+    loader = PyPDFLoader(PDF_PATH)
     docs = loader.load()
-   
-    db = Chroma.from_documents(docs, embedding_function, persist_directory='chroma')
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    split_docs = text_splitter.split_documents(docs)
+    db = Chroma.from_documents(split_docs, get_embeddings(), persist_directory=VECTOR_DB_PATH)
     return db
-
-
-db = load_documents()
-
 
 @RagLearningBp.route('/')
 def index():
+    global db
+    if db is None:
+        db = load_document()
     return render_template('rag.html')
 
 @RagLearningBp.route('/ask', methods=['POST'])
 def query():
-    user_input = request.get_json()['message']
-    print("working on it....")
-
-    context = db.similarity_search(user_input, k=N_DOC)
-
-    # Combine Context and User input
-    context_text = " ".join([doc.page_content for doc in context])
+    global db
+    if db is None:
+        db = load_document()
     
-    # Optionally, split the context into smaller chunks if too long
-    context_chunks = split_text(context_text)
-
-    # Prepare user input with context
-    user_input_with_context = "Context: " + "".join(context_chunks) + " " +"Based on above context answer this and responde in plain text: " + user_input
+    user_input = request.get_json()['message']
+    context = db.similarity_search(user_input, k=N_DOC)
+    context_text = " ".join([doc.page_content for doc in context])
+    user_input_with_context = f"Context: {context_text} Based on the above context, answer this in a teaching manner: {user_input}"
+    
     auth = "Bearer " + secrets.getAPIKey()
     response = requests.post(
         url="https://openrouter.ai/api/v1/chat/completions",
         headers={
-            "Authorization": auth, 
+            "Authorization": auth,
             "Content-Type": "application/json"
         },
         data=json.dumps({
@@ -64,13 +67,6 @@ def query():
             "transforms": ["middle-out"],
             "messages": [{"role": "user", "content": user_input_with_context}]
         })
-        
     )
-
-    print(response.json())
+    
     return jsonify(response.json())
-
-def split_text(text, chunk_size=1000):
-    """Split the context into smaller chunks if too long."""
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=0)
-    return text_splitter.split_text(text)

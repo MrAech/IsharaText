@@ -40,7 +40,7 @@ def signup():
             Config.getdb().session.add(new_user)
             Config.getdb().session.commit()
             flash('User created successfully.', 'success')
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('home.home'))
         
     return render_template('signup.html')
 

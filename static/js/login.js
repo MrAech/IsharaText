@@ -13,7 +13,9 @@ loginForm.addEventListener("submit", async (event) => {
         });
 
         if (response.ok) {
-            window.location.href = "/";
+            // redirect to the home page without window.href
+            window.location.replace("/");
+
         } else {
             const errorText = await response.text();
             alert(`Login failed: ${errorText}`);
