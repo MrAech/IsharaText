@@ -8,6 +8,9 @@ import os
 import torch
 from config import Config
 from AppSecret import secrets
+
+
+
 TTSBp = Blueprint('textToSign', __name__, template_folder='templates')
 APIKEY = secrets.getAPIKey()
 print(APIKEY)
@@ -50,33 +53,74 @@ Output: "YOU DO WHAT?"
 User Input: "I do not understand."  
 Output: "I UNDERSTAND NOT"
 
-REQUIRED: Output only the translation.
+REQUIRED: Output only the translation. Dont show thinking process or any other text.
 
 """
 
+# def translate_to_isl_gloss(text):
+#     completion = client.chat.completions.create(
+#     model="qwen/qwq-32b:free",
+#     messages=[
+#         {"role": "system", "content": SYSTEMPROMPT},
+#         {"role": "user", "content": text}
+#     ]
+#     )
+#     print(completion.choices[0].message.content)
+#     if not completion.choices or not completion.choices[0].message or not completion.choices[0].message.content:
+#         return "NO RESONSE"
+#     else:
+#         response = completion.choices[0].message.content
+#         response = response.replace("Output: ", "")
+#         response = response.replace('"', "")
+#         return response
+        
+
+
+# @TTSBp.route('/')
+# # @login_required
+# def text_to_sign_page():
+#     return render_template('textToSign.html')
+
+# @TTSBp.route('/translate', methods=['POST'])
+# # @login_required
+# def translate():
+#     try:
+#         data = request.get_json()
+#         if not data or 'text' not in data:
+#             return jsonify({'error': 'No text provided'}), 400
+#         text = data.get('text', '')
+#         translation = translate_to_isl_gloss(text)
+#         print(f"Translation: {translation}")
+#         return jsonify({'translation': translation})
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
+
+
+
+
 def translate_to_isl_gloss(text):
     completion = client.chat.completions.create(
-    model="qwen/qwq-32b:free",
-    messages=[
-        {"role": "system", "content": SYSTEMPROMPT},
-        {"role": "user", "content": text}
-    ]
+        model="qwen/qwq-32b:free",
+        messages=[
+            {"role": "system", "content": SYSTEMPROMPT},
+            {"role": "user", "content": text}
+        ]
     )
     print(completion.choices[0].message.content)
     if not completion.choices or not completion.choices[0].message or not completion.choices[0].message.content:
-        return "NO RESONSE"
+        return "NO RESPONSE"
     else:
         response = completion.choices[0].message.content
         response = response.replace("Output: ", "")
         response = response.replace('"', "")
         return response
-        
 
 
 @TTSBp.route('/')
 # @login_required
 def text_to_sign_page():
     return render_template('textToSign.html')
+
 
 @TTSBp.route('/translate', methods=['POST'])
 # @login_required

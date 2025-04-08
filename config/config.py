@@ -2,10 +2,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin
 from AppSecret import secrets
+from flask_mail import Mail
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
+
 
 class Config:
     @staticmethod
@@ -63,6 +69,11 @@ class Config:
     @staticmethod
     def getlogin():
         return login_manager
+
+    @staticmethod
+    def getMail():
+        mail = Mail()
+        return mail
     
     @staticmethod
     def configureApp(app):
@@ -74,10 +85,20 @@ class Config:
         dbname = secrets.getDatabaseName()
         app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{user}:{password}@{host}:{port}/{dbname}'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        MAIL_SERVER = 'smtp-relay.brevo.com'
+        MAIL_PORT = 587
+        MAIL_USE_TLS = True
+        MAIL_USE_SSL = False
+        MAIL_USERNAME = 'isharatextteam@gmail.com'
+        MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+        MAIL_DEFAULT_SENDER = 'IsharaText Team'
+
         Config.getdb().init_app(app)
         Config.getbcrypt().init_app(app)
         Config.getlogin().init_app(app)
+        Config.getMail().init_app(app)
         Config.getlogin().login_view = 'auth.login'
+
 
 
 

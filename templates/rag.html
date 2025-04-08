@@ -1,25 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAG Chatbot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/rag.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISL Chatbot</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown support -->
+  <style>
+    :root {
+      --light-bg: #e0f7fa;
+      --dark-bg: #000;
+      --dark-text: #fff;
+      --light-text: #000;
+      --blue1: #b3e5fc;
+      --blue2: #4fc3f7;
+      --blue3: #0288d1;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--light-text);
+      transition: all 0.3s ease;
+    }
+
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .chat-header {
+      padding: 1rem;
+      background-color: var(--blue3);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background-color: inherit;
+    }
+
+    .chat-footer {
+      display: flex;
+      padding: 1rem;
+      border-top: 1px solid #ccc;
+      background-color: inherit;
+      gap: 0.5rem;
+      position: relative;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: 2px solid var(--blue2);
+      outline: none;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .chat-footer input:focus {
+      box-shadow: 0 0 10px var(--blue2);
+      border-color: var(--blue3);
+    }
+
+    .chat-footer button {
+      padding: 0.6rem 1.2rem;
+      background-color: var(--blue3);
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .chat-footer button:hover {
+      transform: scale(1.05);
+    }
+
+    .chat-msg {
+      margin-bottom: 1rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-msg.user {
+      text-align: right;
+      white-space: pre-wrap;
+    }
+
+    .chat-msg.bot {
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    .chat-msg.bot .markdown {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+
+    .hand-indicator {
+      position: absolute;
+      right: 105%;
+      bottom: 50%;
+      font-size: 2rem;
+      animation: clickHand 1.5s ease-in-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes clickHand {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <button class="dark-mode-toggle">Dark Mode</button>
-    <button class="back-button"><a href="/">Home</a></button>
-
-    <div class="chat-container">
-        <div class="chat-header">Ask About ISL</div>
-        <div class="chat-box" id="chatBox"></div>
-        <div class="input-container">
-            <textarea id="userInput" class="chat-input" placeholder="Ask a question..."></textarea>
-            <button id="sendButton" class="send-btn">Send</button>
-        </div>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>ISL Chatbot</h2>
+      <button onclick="toggleTheme()">🌓</button>
     </div>
 
-    <script src="{{ url_for('static', filename='js/rag.js') }}"></script>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-msg bot">Hi! Ask me anything related to Indian Sign Language.</div>
+    </div>
+
+    <div class="chat-footer">
+      <input type="text" id="chatInput" placeholder="Ask me something about ISL..." onclick="hideHand()" onkeydown="handleEnter(event)">
+      <div id="handIndicator" class="hand-indicator">👉</div>
+      <button onclick="startListening()">🎤</button>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    let handClicks = 0;
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const isDark = document.body.classList.contains("dark-mode");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+
+    function handleEnter(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("chatInput");
+      const message = input.value.trim();
+      if (message === "") return;
+
+      const chatBody = document.getElementById("chatBody");
+
+      const userMsg = document.createElement("div");
+      userMsg.className = "chat-msg user";
+      userMsg.textContent = message;
+      chatBody.appendChild(userMsg);
+
+      const botMsg = document.createElement("div");
+      botMsg.className = "chat-msg bot";
+      botMsg.innerHTML = "<div class='markdown'>Thinking...</div>";
+      chatBody.appendChild(botMsg);
+
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      fetch("/ragLearning/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ question: message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.answer) {
+          botMsg.innerHTML = "<div class='markdown'>" + marked.parse(data.answer) + "</div>";
+        } else {
+          botMsg.innerHTML = "<div class='markdown'>Sorry, I couldn't find an answer.</div>";
+        }
+        chatBody.scrollTop = chatBody.scrollHeight;
+      })
+      .catch(error => {
+        botMsg.innerHTML = "<div class='markdown'>Error: " + error.message + "</div>";
+      });
+
+      input.value = "";
+    }
+
+    function startListening() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+
+      recognition.onresult = function(event) {
+        const speechResult = event.results[0][0].transcript;
+        document.getElementById("chatInput").value = speechResult;
+        sendMessage();
+      };
+
+      recognition.onerror = function(event) {
+        alert("Error: " + event.error);
+      };
+
+      recognition.start();
+    }
+
+    function showHand() {
+      const hand = document.getElementById("handIndicator");
+      if (handClicks < 4) {
+        hand.style.opacity = 1;
+      }
+    }
+
+    function hideHand() {
+      const hand = document.getElementById("handIndicator");
+      handClicks++;
+      if (handClicks >= 4) {
+        hand.style.display = "none";
+      }
+    }
+
+    window.onload = () => {
+      setTimeout(showHand, 1000);
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+      } 
+    };
+  </script>
 </body>
 </html>

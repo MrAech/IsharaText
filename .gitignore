@@ -15,4 +15,7 @@ db/
 .keras/
 __pycache__/
 AppSecret.py
-
+.env
+templates/login.html
+templates/signup.html
+*.yml
