@@ -1,0 +1,399 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISL Contribute</title>
+  <style>
+    :root {
+      --light-bg: #e3f2fd;
+      --blue1: #bbdefb;
+      --blue2: #64b5f6;
+      --blue3: #1976d2;
+      --warning: #ff5252;
+      --dark-bg: #121212;
+      --dark-text: #f0f0f0;
+      --dark-container: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      color: #000;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background-color: var(--blue1);
+      padding: 2rem 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease;
+      position: relative;
+      transition: background-color 0.3s;
+    }
+
+    body.dark-mode .container {
+      background-color: var(--dark-container);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--blue3);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      animation: popIn 0.8s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .mode-box {
+      background: var(--blue2);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      font-weight: bold;
+      color: inherit;
+    }
+
+    input[type="text"], input[type="file"], textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--blue2);
+      border-radius: 10px;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+      background-color: white;
+      transition: box-shadow 0.3s ease;
+    }
+
+    body.dark-mode input[type="text"],
+    body.dark-mode input[type="file"],
+    body.dark-mode textarea {
+      background-color: #2c2c2c;
+      color: var(--dark-text);
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 10px var(--blue2);
+    }
+
+    textarea {
+      height: 140px;
+    }
+
+    .warning {
+      color: var(--warning);
+      font-size: 0.9rem;
+      margin-top: 0.4rem;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .link-upload {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--blue3);
+    }
+
+    button {
+      margin-top: 2rem;
+      background-color: var(--blue3);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-size: 1.05rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--blue2);
+      transform: translateY(-2px);
+    }
+
+    .dark-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="dark-toggle">
+    <button onclick="toggleTheme()">🌓</button>
+  </div>
+
+  <div class="container">
+    <h2>Contribute Your ISL Sign</h2>
+
+    <label for="word">Word:</label>
+    <input type="text" id="word" name="word" placeholder="Enter the word for which you're contributing">
+
+    <label for="video">Upload ISL Video:</label>
+    <input type="file" id="video" name="video" accept="video/*">
+    <p class="warning">⚠️ Please ensure the video clearly shows the ISL sign and is of good quality.</p>
+
+    <label for="videoLink">Or Upload Video Link (YouTube, Google Drive, etc.):</label>
+    <input type="text" id="videoLink" name="videoLink" placeholder="Paste the video link here">
+
+    <label for="description">Description (optional):</label>
+    <textarea id="description" name="description" placeholder="Add any notes or description..."></textarea>
+
+    <button type="submit">Submit Contribution</button>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISL Contribute</title>
+  <style>
+    :root {
+      --light-bg: #e3f2fd;
+      --blue1: #bbdefb;
+      --blue2: #64b5f6;
+      --blue3: #1976d2;
+      --warning: #ff5252;
+      --dark-bg: #121212;
+      --dark-text: #f0f0f0;
+      --dark-container: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      color: #000;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background-color: var(--blue1);
+      padding: 2rem 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease;
+      position: relative;
+      transition: background-color 0.3s;
+    }
+
+    body.dark-mode .container {
+      background-color: var(--dark-container);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--blue3);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      animation: popIn 0.8s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .mode-box {
+      background: var(--blue2);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      font-weight: bold;
+      color: inherit;
+    }
+
+    input[type="text"], input[type="file"], textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--blue2);
+      border-radius: 10px;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+      background-color: white;
+      transition: box-shadow 0.3s ease;
+    }
+
+    body.dark-mode input[type="text"],
+    body.dark-mode input[type="file"],
+    body.dark-mode textarea {
+      background-color: #2c2c2c;
+      color: var(--dark-text);
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 10px var(--blue2);
+    }
+
+    textarea {
+      height: 140px;
+    }
+
+    .warning {
+      color: var(--warning);
+      font-size: 0.9rem;
+      margin-top: 0.4rem;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .link-upload {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--blue3);
+    }
+
+    button {
+      margin-top: 2rem;
+      background-color: var(--blue3);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-size: 1.05rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--blue2);
+      transform: translateY(-2px);
+    }
+
+    .dark-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      font-size: 1.5rem;
+      text-decoration: none;
+    }
+
+    .home-btn:hover {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="home-btn">🏠</a>
+
+  <div class="dark-toggle">
+    <button onclick="toggleTheme()">🌓</button>
+  </div>
+
+  <div class="container">
+    <h2>Contribute Your ISL Sign</h2>
+
+    <label for="word">Word:</label>
+    <input type="text" id="word" name="word" placeholder="Enter the word for which you're contributing">
+
+    <label for="video">Upload ISL Video:</label>
+    <input type="file" id="video" name="video" accept="video/*">
+    <p class="warning">⚠️ Please ensure the video clearly shows the ISL sign and is of good quality.</p>
+
+    <label for="videoLink">Or Upload Video Link (YouTube, Google Drive, etc.):</label>
+    <input type="text" id="videoLink" name="videoLink" placeholder="Paste the video link here">
+
+    <label for="description">Description (optional):</label>
+    <textarea id="description" name="description" placeholder="Add any notes or description..."></textarea>
+
+    <button type="submit">Submit Contribution</button>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('dark-mode', isDark ? 'true' : 'false');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+    });
+  </script>
+</body>
+</html>

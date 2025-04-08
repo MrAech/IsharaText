@@ -12,12 +12,6 @@ MasterDataTableName = "ReadyToUSE"
 
 def load_dictionary():
     labels = {}
-    # conn = mysql.connector.connect(
-    #     host="localhost",
-    #     user='root',
-    #     password=secrets().getDBPassword(),
-    #     database=secrets().getDatabaseName()
-    # )
 
     conn = pymysql.connect(
         charset='utf8mb4',

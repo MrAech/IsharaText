@@ -1,0 +1,531 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISL Meetup</title>
+  <style>
+    :root {
+      --light-bg: #e3f2fd;
+      --blue1: #bbdefb;
+      --blue2: #64b5f6;
+      --blue3: #1976d2;
+      --dark-bg: #121212;
+      --dark-text: #f0f0f0;
+      --dark-container: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      color: #000;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 6rem auto 3rem;
+      background-color: var(--blue1);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease;
+      transition: background-color 0.3s;
+    }
+
+    body.dark-mode .container {
+      background-color: var(--dark-container);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue3);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="email"], textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--blue2);
+      border-radius: 10px;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      background-color: white;
+      transition: box-shadow 0.3s ease;
+    }
+
+    body.dark-mode input,
+    body.dark-mode textarea,
+    body.dark-mode select {
+      background-color: #2c2c2c;
+      color: var(--dark-text);
+    }
+
+    textarea {
+      height: 120px;
+    }
+
+    button {
+      margin-top: 2rem;
+      background-color: var(--blue3);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-size: 1.05rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--blue2);
+      transform: translateY(-2px);
+    }
+
+    .fixed-controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--blue1);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode .fixed-controls {
+      background-color: var(--dark-container);
+    }
+
+    .home-btn {
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background-color: var(--blue2);
+      color: white;
+      text-decoration: none;
+    }
+
+    .dark-toggle {
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background-color: var(--blue2);
+      color: white;
+      text-decoration: none;
+      border: none;
+      white-space: nowrap;
+      width: auto;        
+      flex-shrink: 0;    
+    }
+
+    .home-btn:hover {
+      background-color: var(--blue3);
+    }
+
+    .warning {
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid var(--blue2);
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--blue3);
+      color: white;
+    }
+
+    body.dark-mode th {
+      background-color: #333;
+    }
+
+    body.dark-mode td {
+      border-color: #444;
+    }
+
+    a.meeting-link {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="fixed-controls">
+    <a href="/" class="home-btn">🏠 Home</a>
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌙 Toggle Dark</button>
+  </div>
+
+  <div class="container">
+    <h1>🤝 ISL Peer Meetup</h1>
+
+    <form method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <select name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Other">Other</option>
+      </select>
+      <textarea name="message" placeholder="Message (optional)"></textarea>
+      <input type="datetime-local" name="time" required />
+      <button type="submit">Request Meetup</button>
+    </form>
+
+    {% if meetups %}
+    <div class="warning">
+      ⚠️ When you open a meeting link, the first person to join will become the moderator. Others will wait until you join.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Message</th>
+          <th>Time</th>
+          <th>Meeting Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in meetups %}
+        <tr>
+          <td>{{ m.name }}</td>
+          <td>{{ m.gender }}</td>
+          <td>{{ m.message or '-' }}</td>
+          <td>{{ m.preferred_time }}</td>
+          <td>
+            {% if m.meet_link %}
+              <a href="{{ m.meet_link }}" target="_blank" class="meeting-link">Join Now</a>
+            {% else %}
+              <em>Waiting for others...</em>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const isDark = localStorage.getItem("darkMode") === "true";
+      if (isDark) {
+        document.body.classList.add("dark-mode");
+      }
+    });
+  </script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ISL Meetup</title>
+  <style>
+    :root {
+      --light-bg: #e3f2fd;
+      --blue1: #bbdefb;
+      --blue2: #64b5f6;
+      --blue3: #1976d2;
+      --dark-bg: #121212;
+      --dark-text: #f0f0f0;
+      --dark-container: #1e1e1e;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      color: #000;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 6rem auto 3rem;
+      background-color: var(--blue1);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease;
+      transition: background-color 0.3s;
+    }
+
+    body.dark-mode .container {
+      background-color: var(--dark-container);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--blue3);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="email"], textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--blue2);
+      border-radius: 10px;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      background-color: white;
+      transition: box-shadow 0.3s ease;
+    }
+
+    body.dark-mode input,
+    body.dark-mode textarea,
+    body.dark-mode select {
+      background-color: #2c2c2c;
+      color: var(--dark-text);
+    }
+
+    textarea {
+      height: 120px;
+    }
+
+    button {
+      margin-top: 2rem;
+      background-color: var(--blue3);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-size: 1.05rem;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--blue2);
+      transform: translateY(-2px);
+    }
+
+    .fixed-controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--blue1);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode .fixed-controls {
+      background-color: var(--dark-container);
+    }
+
+    .home-btn {
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background-color: var(--blue2);
+      color: white;
+      text-decoration: none;
+    }
+
+    .dark-toggle {
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background-color: var(--blue2);
+      color: white;
+      text-decoration: none;
+      border: none;
+      white-space: nowrap;
+      width: auto;        
+      flex-shrink: 0;    
+    }
+
+    .home-btn:hover {
+      background-color: var(--blue3);
+    }
+
+    .warning {
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid var(--blue2);
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--blue3);
+      color: white;
+    }
+
+    body.dark-mode th {
+      background-color: #333;
+    }
+
+    body.dark-mode td {
+      border-color: #444;
+    }
+
+    a.meeting-link {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="fixed-controls">
+    <a href="/" class="home-btn">🏠 Home</a>
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌙 Toggle Dark</button>
+  </div>
+
+  <div class="container">
+    <h1>🤝 ISL Peer Meetup</h1>
+
+    <form method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <select name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Other">Other</option>
+      </select>
+      <textarea name="message" placeholder="Message (optional)"></textarea>
+      <input type="datetime-local" name="time" required />
+      <button type="submit">Request Meetup</button>
+    </form>
+
+    {% if meetups %}
+    <div class="warning">
+      ⚠️ When you open a meeting link, the first person to join will become the moderator. Click on Login To do so .
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Message</th>
+          <th>Time</th>
+          <th>Meeting Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in meetups %}
+        <tr>
+          <td>{{ m.name }}</td>
+          <td>{{ m.gender }}</td>
+          <td>{{ m.message or '-' }}</td>
+          <td>{{ m.preferred_time }}</td>
+          <td>
+            {% if m.meet_link %}
+              <a href="{{ m.meet_link }}" target="_blank" class="meeting-link">Join Now</a>
+            {% else %}
+              <em>Waiting for others...</em>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+    });
+  </script>
+</body>
+</html>
+
